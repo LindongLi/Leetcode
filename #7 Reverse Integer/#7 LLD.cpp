@@ -15,7 +15,7 @@ class Solution
 public:
 	int reverse(int x)
 	{
-		if(x == -x) return 0;	// deal "-2147483648", weird input
+		if(x == -x) return 0;	// handle "-2147483648", weird input
 		int digits[12];
 		bool neg = false;
 		int stack_pos = 0;
@@ -35,7 +35,7 @@ public:
 		{
 			if((result > 214748364) || ((result == 214748364) && (digits[i] > 7)))
 			{
-				return 0;	// deal overflow
+				return 0;	// handle overflow
 			}
 			result *= 10;
 			result += digits[i];
@@ -48,6 +48,7 @@ public:
 idea: simple :)
 complexity: O(1)
 */
+
 int main(void)
 {
 	Solution engine;
