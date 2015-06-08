@@ -20,7 +20,7 @@ public:
 		result.resize(rowIndex + 1);
 		result[0] = 1;
 		result[rowIndex] = 1;
-		for(int i = 1, ri = rowIndex - 1; i <= ri; i++, ri--)
+		for (int i = 1, ri = rowIndex - 1; i <= ri; i++, ri--)
 		{
 			long long unsigned int cache = result[i - 1];
 			cache = cache * (rowIndex + 1 - i) / i;

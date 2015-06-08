@@ -31,6 +31,6 @@ public:
 	{
 		int ns = 0, es = s.length() - 1;
 		int np = 0, ep = p.length() - 1;
-		
+
 	}
 };

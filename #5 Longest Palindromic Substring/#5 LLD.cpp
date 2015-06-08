@@ -17,41 +17,41 @@ http://articles.leetcode.com/2011/11/longest-palindromic-substring-part-i.html
 class Solution
 {
 public:
-	#define MANACHER
-	#ifndef MANACHER
+#define MANACHER
+#ifndef MANACHER
 	string longestPalindrome(string s)	// enumerate method
 	{
 		string result;
-		for(int pos = 0; pos < s.length(); pos++)
+		for (int pos = 0; pos < s.length(); pos++)
 		{
 			// enumerate all odd length palindrome
 			int odd = 0;
-			while((pos >= odd) && ((pos + odd) < s.length()) && (s[pos - odd] == s[pos + odd]))
+			while ((pos >= odd) && ((pos + odd) < s.length()) && (s[pos - odd] == s[pos + odd]))
 			{
 				odd++;
 			}
-			if(result.length() < (odd + odd -1))
+			if (result.length() < (odd + odd - 1))
 			{
-				result = s.substr(pos - odd + 1, odd + odd -1);
+				result = s.substr(pos - odd + 1, odd + odd - 1);
 			}
 			// enumerate all even length palindrome
 			int even = 0;
-			while((pos >= even) && ((pos + even + 1) < s.length()) && (s[pos - even] == s[pos + even + 1]))
+			while ((pos >= even) && ((pos + even + 1) < s.length()) && (s[pos - even] == s[pos + even + 1]))
 			{
 				even++;
 			}
-			if(result.length() < (even + even))
+			if (result.length() < (even + even))
 			{
 				result = s.substr(pos - even + 1, even + even);
 			}
 		}
 		return result;
 	}
-	#else
+#else
 	string longestPalindrome(string s)	// manacher algorithm
 	{
 		string supers;
-		for(int i = 0; i < s.length(); i++)
+		for (int i = 0; i < s.length(); i++)
 		{
 			supers += '|';
 			supers += s[i];
@@ -61,30 +61,30 @@ public:
 
 		int RmaxI = 0, RmaxPos = 0;
 		int *map = new int[supers.length()];
-		for(int i = 0; i < supers.length(); i++)
+		for (int i = 0; i < supers.length(); i++)
 		{
 			map[i] = 0;
-			if(i <= RmaxPos)
+			if (i <= RmaxPos)
 			{
 				int i_mirror = RmaxI - (i - RmaxI);
 				map[i] = min(RmaxPos - i, map[i_mirror]);
 			}
 			// palindrome expand from position i
-			while((map[i] <= i) && ((i + map[i]) < supers.length()) && (supers[i - map[i]] == supers[i + map[i]]))
+			while ((map[i] <= i) && ((i + map[i]) < supers.length()) && (supers[i - map[i]] == supers[i + map[i]]))
 			{
 				map[i]++;
 			}
 			map[i]--;
-			if(RmaxPos < (i + map[i]))
+			if (RmaxPos < (i + map[i]))
 			{
 				RmaxPos = i + map[i];
 				RmaxI = i;
 			}
 		}
 		int ansI = 0, ansLen = 0;
-		for(int i = 0; i < supers.length(); i++)
+		for (int i = 0; i < supers.length(); i++)
 		{
-			if(ansLen < map[i])
+			if (ansLen < map[i])
 			{
 				ansLen = map[i];
 				ansI = i;
@@ -94,7 +94,7 @@ public:
 		delete []map;
 		return s.substr((ansI - ansLen) >> 1, ansLen);
 	}
-	#endif
+#endif
 };
 
 /*

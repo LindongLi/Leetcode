@@ -24,22 +24,22 @@ public:
 		int carryon = 0;
 		ListNode *now = new ListNode(0);
 		ListNode *result = now;
-		while(true)
+		while (true)
 		{
 			bool looping = (carryon != 0);	// break when carryon == 0 && l1 == NULL && l2 == NULL
-			if(l1 != NULL)
+			if (l1 != NULL)
 			{
 				looping = true;
 				carryon += l1->val;
 				l1 = l1->next;
 			}
-			if(l2 != NULL)
+			if (l2 != NULL)
 			{
 				looping = true;
 				carryon += l2->val;
 				l2 = l2->next;
 			}
-			if(!looping) break;
+			if (!looping) break;
 			now->next = new ListNode(carryon % 10);
 			carryon = carryon / 10;
 			now = now->next;
@@ -56,7 +56,7 @@ complexity: O(N)
 void Print(ListNode *l)
 {
 	cout << l->val;
-	if(l->next != NULL)
+	if (l->next != NULL)
 	{
 		cout << '\t';
 		Print(l->next);

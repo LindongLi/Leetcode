@@ -15,11 +15,11 @@ class Solution
 public:
 	int reverse(int x)
 	{
-		if(x == -x) return 0;	// handle "-2147483648", weird input
+		if (x == -x) return 0;	// handle "-2147483648", weird input
 		int digits[12];
 		bool neg = false;
 		int stack_pos = 0;
-		if(x < 0)
+		if (x < 0)
 		{
 			x = -x;
 			neg = true;
@@ -29,11 +29,11 @@ public:
 			digits[stack_pos++] = x % 10;
 			x /= 10;
 		}
-		while(x != 0);
+		while (x != 0);
 		int result = 0;
-		for(int i = 0; i < stack_pos; i++)
+		for (int i = 0; i < stack_pos; i++)
 		{
-			if((result > 214748364) || ((result == 214748364) && (digits[i] > 7)))
+			if ((result > 214748364) || ((result == 214748364) && (digits[i] > 7)))
 			{
 				return 0;	// handle overflow
 			}

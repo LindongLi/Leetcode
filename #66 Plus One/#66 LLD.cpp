@@ -17,10 +17,10 @@ public:
 	{
 		int carry = 1;
 		vector<int>::reverse_iterator rit = digits.rbegin();
-		for(; rit != digits.rend(); rit++)
+		for (; rit != digits.rend(); rit++)
 		{
 			carry += *rit;
-			if(carry >= 10)
+			if (carry >= 10)
 			{
 				*rit = carry - 10;
 				carry = 1;
@@ -31,7 +31,7 @@ public:
 				carry = 0;
 			}
 		}
-		if(carry)
+		if (carry)
 		{
 			digits.insert(digits.begin(), 1);
 		}

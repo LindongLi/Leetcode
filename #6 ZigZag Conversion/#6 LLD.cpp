@@ -30,35 +30,35 @@ class Solution
 public:
 	string convert(string s, int numRows)
 	{
-		if(numRows <= 1) return s;
+		if (numRows <= 1) return s;
 		string result;
 		const int maxlen = s.length();
 		const int groupnum = numRows + numRows - 2;
 
 		//processing header
 		int pos = 0;
-		while(pos < maxlen)
+		while (pos < maxlen)
 		{
 			result += s[pos];
 			pos += groupnum;
 		}
 		//processing middle
-		for(int i = 1; i < (numRows - 1); i++)
+		for (int i = 1; i < (numRows - 1); i++)
 		{
 			int posa = i, posb = groupnum - i;
-			while(1)
+			while (1)
 			{
-				if(posa >= maxlen) break;
+				if (posa >= maxlen) break;
 				result += s[posa];
 				posa += groupnum;
-				if(posb >= maxlen) break;
+				if (posb >= maxlen) break;
 				result += s[posb];
 				posb += groupnum;
 			}
 		}
 		//processing tail
 		pos = numRows - 1;
-		while(pos < maxlen)
+		while (pos < maxlen)
 		{
 			result += s[pos];
 			pos += groupnum;

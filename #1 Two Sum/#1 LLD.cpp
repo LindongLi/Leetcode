@@ -1,6 +1,6 @@
-#include <map>
 #include <vector>
 #include <iostream>
+#include <unordered_map>
 using namespace std;
 
 /*
@@ -8,8 +8,9 @@ https://leetcode.com/problems/two-sum/
 
 Given an array of integers, find two numbers such that they add up to a specific target number.
 
-The function twoSum should return indices of the two numbers such that they add up to the target, where index1 must
-be less than index2. Please note that your returned answers (both index1 and index2) are not zero-based.
+The function twoSum should return indices of the two numbers such that they add up to the target,
+where index1 must be less than index2.
+Please note that your returned answers (both index1 and index2) are not zero-based.
 
 You may assume that each input would have exactly one solution.
 
@@ -22,19 +23,18 @@ public:
 	vector<int> twoSum(vector<int>& nums, int target)
 	{
 		vector<int> result;
-		map<int, int> valueindex;	// map value to index
-		for(int i = nums.size() - 1; i >= 0; i--)
+		unordered_map<int, int> val_index;	// map value to index
+		for (int i = 0; i < nums.size(); i++)
 		{
-			if(valueindex.find(target - nums[i]) != valueindex.end())
+			if (val_index.find(target - nums[i]) != val_index.end())	// found
 			{
-				//finded
+				result.push_back(val_index[target - nums[i]]);
 				result.push_back(i + 1);
-				result.push_back(valueindex[target - nums[i]]);
 				break;
 			}
 			else
 			{
-				valueindex[nums[i]] = i + 1;
+				val_index[nums[i]] = i + 1;
 			}
 		}
 		return result;
@@ -42,19 +42,18 @@ public:
 };
 
 /*
-idea: map uses red-black tree? Searching costs O(logN)
-complexity: Time O(NlogN)
+idea: unordered_map uses hash? Searching costs O(1)
+complexity: Time O(N)
 */
 
 int main(void)
 {
 	vector<int> nums;
-	nums.push_back(2);
-	nums.push_back(7);
-	nums.push_back(11);
-	nums.push_back(15);
+	nums.push_back(0);
+	nums.push_back(4);
+	nums.push_back(3);
+	nums.push_back(0);
 	Solution engine;
-	vector<int> res = engine.twoSum(nums, 9);
-	cout << res[0] << '\t' << res[1] << '\n';
+	cout << engine.twoSum(nums, 0).size() << '\n';
 	return 0;
 }

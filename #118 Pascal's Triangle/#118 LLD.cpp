@@ -26,12 +26,12 @@ public:
 	{
 		vector<int> v;
 		vector<vector<int> > result;
-		for(int i = 0; i < numRows; i++)
+		for (int i = 0; i < numRows; i++)
 		{
 			v.resize(i + 1);
 			v[0] = 1;
 			v[i] = 1;
-			for(int j = 1; j < i; j++)
+			for (int j = 1; j < i; j++)
 			{
 				v[j] = result[i - 1][j - 1] + result[i - 1][j];
 			}

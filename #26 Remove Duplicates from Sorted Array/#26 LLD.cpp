@@ -24,9 +24,9 @@ public:
 	{
 		int result = 0;
 		int current = (nums.size() != 0) ? !nums[0] : 0;
-		for(int i = 0; i < nums.size(); i++)
+		for (int i = 0; i < nums.size(); i++)
 		{
-			if(current != nums[i])
+			if (current != nums[i])
 			{
 				current = nums[i];
 				nums[result++] = current;
