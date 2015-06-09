@@ -5,4 +5,5 @@
 !*.py
 !*.cpp
 !*.java
+.DS_Store
 !README.md
