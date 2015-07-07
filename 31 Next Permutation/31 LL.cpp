@@ -36,7 +36,7 @@ public:
 				{
 					if ((data[-1] < slides[0]) && (slides[0] < bigger[0]))
 					{
-						bigger  = slides;
+						bigger = slides;
 					}
 				}
 				swap(data[-1], bigger[0]);

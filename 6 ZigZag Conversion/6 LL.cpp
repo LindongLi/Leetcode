@@ -4,8 +4,8 @@ using namespace std;
 /*
 https://leetcode.com/problems/zigzag-conversion/
 
-The string "PAYPALISHIRING" is written in a zigzag patternon a given number of rows
-like this: (you may want to display this pattern in a fixed font for better legibility)
+The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this:
+(you may want to display this pattern in a fixed font for better legibility)
 
 P   A   H   N
 A P L S I I G
@@ -22,7 +22,7 @@ Zigzag pattern demo:
 24		246		2 68
 		3 7		35 9
 				4  A
-Every zigzag has 2 * nRows - 2 elements
+Every zigzag has 2 * nRows - 2
 */
 
 class Solution
@@ -43,7 +43,7 @@ public:
 			pos += groupnum;
 		}
 		//processing middle
-		for (int i = 1; i < (numRows - 1); i++)
+		for (int i = 1; i < (numRows - 1); ++i)
 		{
 			int posa = i, posb = groupnum - i;
 			while (1)
@@ -68,7 +68,7 @@ public:
 };
 
 /*
-idea: 2-dimentional position mapping
+idea: 2-dimensional position mapping
 complexity: O(N)
 */
 
