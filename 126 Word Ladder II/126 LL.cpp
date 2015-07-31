@@ -30,7 +30,6 @@ All words contain only lowercase alphabetic characters.
 class Solution
 {
 private:
-	string target;
 	vector<vector<string> > layer;
 	vector<vector<string> > result;
 	static bool isneighbor(string &a, string &b)
@@ -48,14 +47,13 @@ private:
 		}
 		return neighbor;
 	}
-	void revsearch(unordered_set<string> &dict)
+	void revsearch(unordered_set<string> &dict, string &target)
 	{
 		vector<string> nextrow;
-		vector<string> &row = layer.rbegin()[0];
-		vector<string>::iterator word = row.begin();
-		for (; word != row.end(); ++word)
+		vector<string>::iterator word = layer.back().begin();
+		for (; word != layer.back().end(); ++word)
 		{
-			if (isneighbor(target, word[0])) return;
+			if (isneighbor(word[0], target)) return;	// terminate neighboring target
 			string::iterator letter = word[0].begin();
 			for (char rc; letter != word[0].end(); ++letter)
 			{
@@ -75,12 +73,12 @@ private:
 		}
 		if (nextrow.size() != 0)
 		{
-			// continue generating next row until near start
+			// continue generating next row
 			layer.push_back(nextrow);
-			revsearch(dict);
+			revsearch(dict, target);
 		}
 	}
-	void anspath(vector<string> &trace, int max)
+	void answerpath(vector<string> &trace, int max)
 	{
 		if (max < 0) result.push_back(trace);
 		else
@@ -89,10 +87,10 @@ private:
 			vector<string>::iterator word = row.begin();
 			for (; word != row.end(); ++word)
 			{
-				if (isneighbor(trace.rbegin()[0], word[0]))
+				if (isneighbor(trace.back(), word[0]))
 				{
 					trace.push_back(word[0]);
-					anspath(trace, max - 1);
+					answerpath(trace, max - 1);
 					trace.pop_back();
 				}
 			}
@@ -101,15 +99,14 @@ private:
 public:
 	vector<vector<string> > findLadders(string start, string end, unordered_set<string> &dict)
 	{
-		vector<string> trace(1);
-		// first breadth first search end to start path
-		target = start;
-		trace[0] = end;
-		layer.push_back(trace);	// begin search point end
-		revsearch(dict);
+		// first breadth first search string end to string start path
+		// construct first breadth from string end
+		layer.push_back(vector<string> (1, end));
+		revsearch(dict, start);
 		// then depth first search start to end path
-		trace[0] = start;	// begin search point start
-		anspath(trace, layer.size() - 1);
+		// construct first depth from string start
+		vector<string> trace(1, start);
+		answerpath(trace, layer.size() - 1);
 		return result;
 	}
 };

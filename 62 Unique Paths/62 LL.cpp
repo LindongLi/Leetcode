@@ -17,22 +17,19 @@ class Solution
 public:
 	int uniquePaths(int m, int n)
 	{
-		--m;
-		--n;
-		int c = min(m , n);
-		if (c < 0) return 0;
-		long long int result = 1;
-		for (int i = 1; i <= c; ++i)
+		int c = min(m - 1 , n - 1);
+		long long int result = (c < 0) ? 0 : 1;
+		for (int i = 0; i < c; ++i)
 		{
 			// attention overflow may occur
-			result = result * (m + n + 1 - i) / i;
+			result = result * (m + n - 2 - i) / (i + 1);
 		}
 		return (int)result;
 	}
 };
 
 /*
-idea: min(m, n) combined (m + n)
+idea: pick (m - 1) right moves from (m - 1 + n - 1) total moves
 complexity: Time O(N)
 */
 

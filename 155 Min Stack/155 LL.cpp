@@ -21,7 +21,7 @@ private:
 public:
 	void push(int x)
 	{
-		if ((list.size() == 0) || (minlist.rbegin()[0] >= x))
+		if ((list.size() == 0) || (minlist.back() >= x))
 		{
 			minlist.push_back(x);
 		}
@@ -30,7 +30,7 @@ public:
 	void pop()
 	{
 		if (list.size() == 0) return;
-		if (list.rbegin()[0] == minlist.rbegin()[0])
+		if (list.back() == minlist.back())
 		{
 			minlist.pop_back();
 		}
@@ -39,12 +39,12 @@ public:
 	int top()
 	{
 		if (list.size() == 0) return 0;
-		return list.rbegin()[0];
+		return list.back();
 	}
 	int getMin()
 	{
 		if (list.size() == 0) return 0;
-		return minlist.rbegin()[0];
+		return minlist.back();
 	}
 };
 

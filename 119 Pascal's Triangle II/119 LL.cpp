@@ -18,21 +18,18 @@ public:
 	{
 		vector<int> result;
 		result.resize(rowIndex + 1);
-		result[0] = 1;
-		result[rowIndex] = 1;
-		for (int i = 1, ri = rowIndex - 1; i <= ri; ++i, --ri)
+		long long int cache = 1;
+		for (int i = 0, ri = rowIndex; i <= ri; ++i, --ri)
 		{
-			long long int cache = result[i - 1];
-			cache = cache * (rowIndex + 1 - i) / i;
-			result[i] = (int)cache;
-			result[ri] = (int)cache;
+			result[i] = result[ri] = (int)cache;
+			cache = cache * (rowIndex - i) / (i + 1);
 		}
 		return result;
 	}
 };
 
 /*
-idea: math calculation using combine
+idea: math calculation using combination
 complexity: O(N^2)
 */
 

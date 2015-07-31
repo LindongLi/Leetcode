@@ -47,7 +47,7 @@ public:
 			SecondTransaction[i] = profit;
 		}
 		// try every two transactions combo
-		profit = max(FirstTransaction.rbegin()[0], SecondTransaction.begin()[0]);
+		profit = max(FirstTransaction.back(), SecondTransaction.front());
 		for (int i = 1; i < prices.size(); ++i)
 		{
 			profit = max(profit, FirstTransaction[i - 1] + SecondTransaction[i]);

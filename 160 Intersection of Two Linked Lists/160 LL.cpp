@@ -35,26 +35,26 @@ public:
 	ListNode *getIntersectionNode(ListNode *headA, ListNode *headB)
 	{
 		if ((headA == NULL) || (headB == NULL)) return NULL;
-		ListNode *glideA = headA, *glideB = headB;
+		ListNode *slideA = headA, *slideB = headB;
 		bool secondpass[2] = {false, false};
-		while (glideA != glideB)
+		while (slideA != slideB)
 		{
-			glideA = glideA->next;
-			glideB = glideB->next;
-			if (glideA == NULL)
+			slideA = slideA->next;
+			slideB = slideB->next;
+			if (slideA == NULL)
 			{
 				if (secondpass[0]) return NULL;
 				secondpass[0] = true;
-				glideA = headB;
+				slideA = headB;
 			}
-			if (glideB == NULL)
+			if (slideB == NULL)
 			{
 				if (secondpass[1]) return NULL;
 				secondpass[1] = true;
-				glideB = headA;
+				slideB = headA;
 			}
 		}
-		return glideA;
+		return slideA;
 	}
 };
 

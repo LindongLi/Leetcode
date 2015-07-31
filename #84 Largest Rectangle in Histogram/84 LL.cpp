@@ -41,7 +41,7 @@ private:
 		}
 		if (hstack.size() != 0)
 		{
-			area = height * (position - pstack.rbegin()[0]);
+			area = height * (position - pstack.back());
 		}
 		hstack.push_back(height);
 		pstack.push_back(position);

@@ -29,7 +29,7 @@ class Solution
 {
 private:
 	vector<Interval>::iterator data;
-	int findhead(int val, int min, int max)
+	int findInsert(int val, int min, int max)
 	{
 		while ((min + 1) < max)
 		{
@@ -47,24 +47,6 @@ private:
 		if (val > data[max].end) return max + 1;
 		if (val > data[min].end) return min + 1;
 		return min;
-	}
-	int findright(int val, int min, int max)
-	{
-		while ((min + 1) < max)
-		{
-			int mid = (min + max) >> 1;
-			if (val < data[mid].start)
-			{
-				max = mid;
-			}
-			else
-			{
-				min = mid;
-			}
-		}
-		if (val < data[min].start) return min - 1;
-		if (val < data[max].start) return max - 1;
-		return max;
 	}
 public:
 	vector<Interval> insert(vector<Interval>& intervals, Interval newInterval)
@@ -102,14 +84,14 @@ public:
 
 
 /*
-idea: binary search start & end position, merge and erase middle
+idea: binary search insert position, merge and erase middle
 complexity: Time O(N)
 */
 
 int main(void)
 {
 	vector<Interval> intervals;
-	intervals.push_back(*new Interval(3, 5));
+	intervals.push_back(Interval(3, 5));
 	intervals.push_back(*new Interval(12, 15));
 	Solution engine;
 	cout << engine.insert(intervals, *new Interval(6, 6)).size() << '\n';

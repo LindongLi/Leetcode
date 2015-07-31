@@ -1,6 +1,7 @@
 #include <iostream>
 using namespace std;
-struct ListNode {
+struct ListNode
+{
 	int val;
 	ListNode *next;
 	ListNode(int x) : val(x), next(NULL) {}
@@ -21,53 +22,53 @@ class Solution
 public:
 	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 	{
-		int carryon = 0;
 		ListNode *now = new ListNode(0);
 		ListNode *result = now;
+		int carry = 0;
 		while (true)
 		{
-			bool looping = (carryon != 0);	// break when carryon == 0 && l1 == NULL && l2 == NULL
+			bool looping = (carry != 0);
 			if (l1 != NULL)
 			{
 				looping = true;
-				carryon += l1->val;
+				carry += l1->val;
 				l1 = l1->next;
 			}
 			if (l2 != NULL)
 			{
 				looping = true;
-				carryon += l2->val;
+				carry += l2->val;
 				l2 = l2->next;
 			}
 			if (!looping) break;
-			now->next = new ListNode(carryon % 10);
-			carryon = carryon / 10;
+			if (carry >= 10)
+			{
+				now->next = new ListNode(carry - 10);
+				carry = 1;
+			}
+			else
+			{
+				now->next = new ListNode(carry);
+				carry = 0;
+			}
 			now = now->next;
 		}
-		return (result->next != NULL) ? result->next : result;	// take care double NULL
+		if (result->next != NULL)
+		{
+			return result->next;
+		}
+		else return result;	// handle empty input
 	}
 };
 
 /*
-idea: Attention to while terminating criteria
+idea: simulate hand calculating
 complexity: O(N)
 */
 
-void Print(ListNode *l)
-{
-	cout << l->val;
-	if (l->next != NULL)
-	{
-		cout << '\t';
-		Print(l->next);
-	}
-	else cout << '\n';
-}
 int main(void)
 {
-	ListNode *l1 = NULL;
-	ListNode *l2 = NULL;
 	Solution engine;
-	Print(engine.addTwoNumbers(l1, l2));
+	engine.addTwoNumbers(NULL, NULL);
 	return 0;
 }

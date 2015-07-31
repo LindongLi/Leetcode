@@ -31,12 +31,12 @@ public:
 		{
 			data[0] = max(data[-1], data[0] + data[-2]);
 		}
-		return nums.rbegin()[0];
+		return nums.back();
 	}
 };
 
 /*
-idea: dynamic programing, OPT(n) optimal solution having n house to choose
+idea: dynamic programing, OPT(n) max rob reward having n house to choose
 complexity: Time O(N)
 */
 

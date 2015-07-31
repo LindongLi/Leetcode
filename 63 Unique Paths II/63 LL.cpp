@@ -62,7 +62,7 @@ public:
 			}
 			last = row[0].begin();
 		}
-		return obstacleGrid.rbegin()->rbegin()[0];
+		return obstacleGrid.back().back();
 	}
 };
 

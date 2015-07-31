@@ -50,15 +50,15 @@ public:
 };
 
 /*
-idea: sort and loop
+idea: sort and loop merge, delete tail
 complexity: Time O(NlogN)
 */
 
 int main(void)
 {
 	vector<Interval> intervals;
-	intervals.push_back(*new Interval(1, 3));
-	intervals.push_back(*new Interval(2, 6));
+	intervals.push_back(Interval(1, 3));
+	intervals.push_back(Interval(2, 6));
 	Solution engine;
 	cout << engine.merge(intervals).size() << '\n';
 	return 0;
