@@ -13,10 +13,10 @@ public:
 	bool isPalindrome(int x)
 	{
 		if (x < 0) return false;
-		int mask = 1;
-		while (mask <= (x / 10))	// mask * 10 possible overflow!
+		int mask = 1000000000;	// near MAX_INT
+		while (mask > x)
 		{
-			mask *= 10;
+			mask /= 10;
 		}
 		while (x != 0)
 		{
@@ -29,7 +29,7 @@ public:
 };
 
 /*
-idea: simple :)
+idea: compare head and tail
 complexity: O(1)
 */
 

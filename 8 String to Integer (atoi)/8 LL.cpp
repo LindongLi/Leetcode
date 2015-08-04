@@ -18,41 +18,36 @@ class Solution
 public:
 	int myAtoi(string str)
 	{
-		int pos = 0;
-		int result = 0;
+		string::iterator data = str.begin();
 		bool neg = false;
-		while (str[pos] == ' ') pos++;
-		if (str[pos] == '+')
+		long long int result = 0;
+		while (data[0] == ' ') ++data;
+		if ((data[0] == '+') || (data[0] == '-'))
 		{
-			pos++;
+			neg = (data[0] == '-');
+			++data;
 		}
-		else if (str[pos] == '-')
+		while (('0' <= data[0]) && (data[0] <= '9'))
 		{
-			pos++;
-			neg = true;
-		}
-		while ((str[pos] >= '0') && (str[pos] <= '9'))
-		{
-			int digit = str[pos++] - '0';
-			if ((result > 214748364) || ((result == 214748364) && (digit > 7)))
+			result = result * 10 + int(data[0] - '0');
+			if (result > 0x7FFFFFFF)
 			{
-				return neg ? -2147483648 : 2147483647;	// handle overflow
+				return neg ? 0x80000000 : 0x7FFFFFFF;
 			}
-			result *= 10;
-			result += digit;
+			++data;
 		}
-		return neg ? (-result) : result;
+		return neg ? -int(result) : int(result);
 	}
 };
 
 /*
-idea: simple :)
+idea: careful handle overflow
 complexity: O(1)
 */
 
 int main(void)
 {
 	Solution engine;
-	cout << engine.myAtoi("  -+1...") << '\n';
+	cout << engine.myAtoi("9223372036854775809") << '\n';
 	return 0;
 }

@@ -34,7 +34,7 @@ public:
 			b >>= 1;
 			mask >>= 1;
 		}
-		// attention unsigned to signed -2147483648 overflow
+		// attention unsigned to signed MIN_INT overflow
 		return neg ? -int(result) : int((result == 0x80000000) ? 0x7FFFFFFF : result);
 	}
 };

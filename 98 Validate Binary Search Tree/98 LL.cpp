@@ -23,7 +23,7 @@ Both the left and right subtrees must also be binary search trees.
 class Solution
 {
 private:
-	bool search(TreeNode *node, TreeNode *min = NULL, TreeNode *max = NULL)
+	bool search(TreeNode *node, TreeNode *min, TreeNode *max)
 	{
 		if (node == NULL) return true;
 		int cache = node->val;
@@ -34,7 +34,7 @@ private:
 public:
 	bool isValidBST(TreeNode* root)
 	{
-		return search(root);
+		return search(root, NULL, NULL);
 	}
 };
 
