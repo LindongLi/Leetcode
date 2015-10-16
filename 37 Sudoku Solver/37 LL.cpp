@@ -16,7 +16,7 @@ class Solution
 {
 private:
 	vector<vector<char> >::iterator data;
-	bool isvalid(int m, int n, char &cnext)
+	void validpos(int m, int n, vector<char> &choice)
 	{
 		vector<bool> map(9, false);
 		for (int i = 0; i < 9; ++i)
@@ -43,13 +43,8 @@ private:
 		for (int i = 0; i < 9; ++i)
 		{
 			if (map[i] == true) continue;
-			if (cnext < char('1' + i))
-			{
-				cnext = char('1' + i);
-				return true;
-			}
+			choice.push_back(char('1' + i));
 		}
-		return false;
 	}
 	bool search(int m, int n = 0)
 	{
@@ -58,11 +53,16 @@ private:
 			for (; n < 9; ++n)
 			{
 				if (data[m][n] != '.') continue;
-				char c = '\0';
-				while (isvalid(m, n, c))
+				vector<char> choice;
+				validpos(m, n, choice);
+				vector<char>::iterator it = choice.begin();
+				for (; it != choice.end(); ++it)
 				{
-					data[m][n] = c;
-					if (search(m, n + 1)) return true;
+					data[m][n] = it[0];
+					if (search(m, n + 1))
+					{
+						return true;
+					}
 				}
 				data[m][n] = '.';
 				return false;

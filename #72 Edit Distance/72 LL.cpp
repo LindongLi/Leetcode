@@ -5,8 +5,7 @@ using namespace std;
 /*
 https://leetcode.com/problems/edit-distance/
 
-Given two words word1 and word2,
-find the minimum number of steps required to convert word1 to word2.
+Given two words word1 and word2, find the minimum number of steps required to convert word1 to word2.
 (each operation is counted as 1 step.)
 
 You have the following 3 operations permitted on a word:
@@ -21,25 +20,24 @@ class Solution
 public:
 	int minDistance(string word1, string word2)
 	{
-		vector<int> opt(word2.length() + 1);
-		for (int i = 0; i < opt.size(); ++i)
+		vector<vector<int> > map(2, vector<int>(word1.length()));
+		for (int i = 0; i < word1.size(); ++i)
 		{
-			opt[i] = i;
-		}
-		string::iterator data = word1.begin();
-		for (; data != word1.end(); ++data)
-		{
-			++opt[0];
-			vector<int>::iterator it = opt.begin() + 1;
-			string::iterator scan = word2.begin();
-			for (; scan != word2.end(); ++scan, ++it)
+			if (word1[i] == word2[0])
 			{
-				it[0] = min(it[0], it[-1]) + ((data[0] == scan[0]) ? 0 : 1);
-				cout << it[0] << '\t';
+				map[i] = i;
 			}
-			cout << endl;
+			else
+			{
+				map[i] = min(map[i - 1] + 1, i + 1);
+			}
 		}
-		return opt.back();
+		int switch = 0;
+	for (int i = 1; i < word2.size(); ++i)
+		{
+			switch = 1 - switch ;
+		for (int j = )
+			}
 	}
 };
 

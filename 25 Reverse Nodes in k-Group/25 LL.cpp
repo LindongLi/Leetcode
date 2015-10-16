@@ -1,4 +1,3 @@
-#include <vector>
 #include <iostream>
 using namespace std;
 struct ListNode
@@ -35,24 +34,27 @@ public:
 		if (k <= 1) return head;
 		ListNode result(0);
 		result.next = head;
-		vector<ListNode*> stack;
-		ListNode *lastail = &result;
-		while (head != NULL)
+		ListNode *slide = &result;
+		while (slide->next != NULL)
 		{
-			stack.push_back(head);
-			head = head->next;
-			if (stack.size() == k)
+			ListNode *lasttail = slide;
+			ListNode *head = slide->next;
+			for (int i = 0; i < k; ++i)
 			{
-				lastail->next = stack.back();
-				vector<ListNode*>::iterator it = stack.end() - 1;
-				for (; it != stack.begin(); --it)
-				{
-					it[0]->next = it[-1];
-				}
-				it[0]->next = head;
-				lastail = it[0];
-				stack.clear();
+				slide = slide->next;
+				if (slide == NULL) return result.next;
 			}
+			lasttail->next = slide;
+			lasttail = head;
+			ListNode *linkpre = slide->next;
+			while (linkpre != slide)
+			{
+				ListNode *cache = head->next;
+				head->next = linkpre;
+				linkpre = head;
+				head = cache;
+			}
+			slide = lasttail;
 		}
 		return result.next;
 	}

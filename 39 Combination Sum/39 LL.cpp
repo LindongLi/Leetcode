@@ -24,33 +24,30 @@ A solution set is:
 class Solution
 {
 private:
+	vector<int> trace;
 	vector<int>::iterator data;
 	vector<vector<int> > result;
-	void search(int max, int target, vector<int> &trace)
+	void search(int pos, int max, int target)
 	{
 		if (target == 0)
 		{
-			// remember to reverse for non-descending
-			result.push_back(vector<int> (trace.rbegin(), trace.rend()));
+			result.push_back(trace);
+			return;
 		}
-		else if (max >= 0)
+		for (int i = pos; i <= max; ++i)
 		{
-			int i = 0;
-			for (; target >= (i * data[max]); ++i)
-			{
-				search(max - 1, target - (i * data[max]), trace);
-				trace.push_back(data[max]);
-			}
-			trace.erase(trace.end() - i, trace.end());
+			if (data[i] > target) return;
+			trace.push_back(data[i]);
+			search(i, max, target - data[i]);
+			trace.pop_back();
 		}
 	}
 public:
 	vector<vector<int> > combinationSum(vector<int>& candidates, int target)
 	{
-		vector<int> trace;
 		data = candidates.begin();
 		sort(candidates.begin(), candidates.end());
-		search(candidates.size() - 1, target, trace);
+		search(0, candidates.size() - 1, target);
 		return result;
 	}
 };

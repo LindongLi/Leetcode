@@ -22,42 +22,35 @@ class Solution
 public:
 	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2)
 	{
-		ListNode *now = new ListNode(0);
-		ListNode *result = now;
+		ListNode *slide = new ListNode(0);
+		ListNode *result = slide;
 		int carry = 0;
-		while (true)
+		while ((l1 != NULL) || (l2 != NULL) || (carry != 0))
 		{
-			bool looping = (carry != 0);
 			if (l1 != NULL)
 			{
-				looping = true;
 				carry += l1->val;
 				l1 = l1->next;
 			}
 			if (l2 != NULL)
 			{
-				looping = true;
 				carry += l2->val;
 				l2 = l2->next;
 			}
-			if (!looping) break;
 			if (carry >= 10)
 			{
-				now->next = new ListNode(carry - 10);
+				slide->next = new ListNode(carry - 10);
 				carry = 1;
 			}
 			else
 			{
-				now->next = new ListNode(carry);
+				slide->next = new ListNode(carry);
 				carry = 0;
 			}
-			now = now->next;
+			slide = slide->next;
 		}
-		if (result->next != NULL)
-		{
-			return result->next;
-		}
-		else return result;	// handle empty input
+		// handle empty input
+		return (result->next == NULL) ? result : result->next;
 	}
 };
 

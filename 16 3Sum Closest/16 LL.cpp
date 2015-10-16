@@ -20,37 +20,37 @@ public:
 	int threeSumClosest(vector<int>& nums, int target)
 	{
 		if (nums.size() < 3) return 0;
-		int result = nums[0] + nums[1] + nums[2];
 		sort(nums.begin(), nums.end());
+		int result = nums[0] + nums[1] + nums[2];
 		vector<int>::iterator first = nums.begin();
-		int firval = first[0] - 1;
+		int val_first = ~first[0];	// memorize
 		for (; first != nums.end(); ++first)
 		{
 			// remove duplicate
-			if (first[0] == firval) continue;
-			firval = first[0];
-			int want = target - firval;
+			if (val_first == first[0]) continue;
+			val_first = first[0];
 			vector<int>::iterator second = first + 1;
 			vector<int>::iterator third = nums.end() - 1;
 			// typical two slide pointer
 			while (second < third)
 			{
-				if (abs(want - second[0] - third[0]) < abs(target - result))
+				int attempt = val_first + second[0] + third[0];
+				if (abs(target - attempt) < abs(target - result))
 				{
 					// better result
-					result = first[0] + second[0] + third[0];
+					result = attempt;
 				}
-				if ((second[0] + third[0]) < want)
+				if (attempt < target)
 				{
 					++second;
 				}
-				else if ((second[0] + third[0]) > want)
+				else if (attempt == target)
 				{
-					--third;
+					return target;
 				}
 				else
 				{
-					return target;
+					--third;
 				}
 			}
 		}
@@ -60,7 +60,7 @@ public:
 
 /*
 idea: loop first value, slide two additional values.
-complexity: Time O(N^2)
+complexity: Time O(N^2) Space O(1)
 */
 
 int main(void)

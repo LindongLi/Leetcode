@@ -1,3 +1,4 @@
+#include <vector>
 #include <iostream>
 #include <algorithm>
 using namespace std;
@@ -13,25 +14,7 @@ Note: The numbers can be arbitrarily large and are non-negative.
 class Solution
 {
 private:
-	string multiply(string &rvb, int digit, int zeros = 0)
-	{
-		int carry = 0;
-		string rvanswer(zeros, '0');
-		string::iterator data = rvb.begin();
-		for (; data != rvb.end(); ++data)
-		{
-			carry += int(data[0] - '0') * digit;
-			rvanswer += char('0' + carry % 10);
-			carry /= 10;
-		}
-		if (carry != 0) rvanswer += char('0' + carry);
-		while ((rvanswer.size() != 0) && (rvanswer.back() == '0'))
-		{
-			rvanswer.pop_back();
-		}
-		return rvanswer;
-	}
-	void addtoself(string &rvanswer, string &rvb)
+	void selfadding(string &rvanswer, string &rvb)
 	{
 		int carry = 0;
 		string::iterator data = rvanswer.begin();
@@ -70,18 +53,36 @@ private:
 			}
 		}
 		if (carry != 0) rvanswer += char('0' + carry);
-		if (rvanswer.length() == 0) rvanswer = "0";
 	}
 public:
 	string multiply(string num1, string num2)
 	{
-		string result;
+		string result = "0";
+		if ((num1 == "") || (num1 == "0") || (num2 == "") || (num2 == "0"))
+		{
+			return result;
+		}
+		if (num1.size() < num2.size())
+		{
+			num1.swap(num2);
+		}
 		reverse(num1.begin(), num1.end());
 		reverse(num2.begin(), num2.end());
+		vector<string> multable(9, num1);
+		for (int i = 1; i < multable.size(); ++i)
+		{
+			selfadding(multable[i], multable[i - 1]);
+		}
+		string zeros;
 		for (int i = 0; i < num2.length(); i++)
 		{
-			string part = multiply(num1, num2[i] - '0', i);
-			addtoself(result, part);
+			if (num2[i] != '0')
+			{
+				zeros += multable[int(num2[i] - '1')];
+				selfadding(result, zeros);
+			}
+			zeros.resize(i + 1);
+			zeros[i] = '0';
 		}
 		reverse(result.begin(), result.end());
 		return result;
@@ -96,6 +97,6 @@ complexity: O(N)
 int main(void)
 {
 	Solution engine;
-	cout << engine.multiply("123", "11") << '\n';
+	cout << engine.multiply("123", "999999999999999999999") << '\n';
 	return 0;
 }

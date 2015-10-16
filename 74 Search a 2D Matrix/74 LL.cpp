@@ -26,42 +26,47 @@ class Solution
 {
 private:
 	vector<int>::iterator data;
-	bool binarysearch(int target, int min, int max)
+	bool search(int min, int max, int target)
 	{
 		while ((min + 1) < max)
 		{
 			int mid = (min + max) >> 1;
-			if (target <= data[mid])
+			if (data[mid] > target)
 			{
-				max = mid;
+				max = mid - 1;
 			}
 			else
 			{
-				min = mid + 1;
+				min = mid;
 			}
 		}
-		if (target == data[min]) return true;
-		if (target == data[max]) return true;
-		return false;
+		return (data[min] == target) || (data[max] == target);
 	}
 public:
 	bool searchMatrix(vector<vector<int> >& matrix, int target)
 	{
+		int min = 0, max = matrix.size() - 1;
 		vector<vector<int> >::iterator col = matrix.begin();
-		for (; (col != matrix.end()) && (col[0][0] <= target); ++col)
+		while ((min + 1) < max)
 		{
-			data = col[0].begin();
-			if (binarysearch(target, 0, col[0].size() - 1))
+			int mid = (min + max) >> 1;
+			if (col[mid][0] > target)
 			{
-				return true;
+				max = mid - 1;
+			}
+			else
+			{
+				min = mid;
 			}
 		}
-		return false;
+		int select = (col[max][0] > target) ? min : max;
+		data = col[select].begin();
+		return search(0, col[select].size() - 1, target);
 	}
 };
 
 /*
-idea: column for loop, row binary search
+idea: column binary search, then row binary search
 complexity: Time O(NlogN)
 */
 

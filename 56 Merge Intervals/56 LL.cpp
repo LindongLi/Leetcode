@@ -22,7 +22,7 @@ return [1,6],[8,10],[15,18].
 class Solution
 {
 private:
-	static bool compare(Interval a, Interval b)
+	static bool compare(Interval &a, Interval &b)
 	{
 		return (a.start < b.start);
 	}

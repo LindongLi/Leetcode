@@ -17,37 +17,38 @@ Although the above answer is in lexicographical order, your answer could be in a
 
 class Solution
 {
-private:
-	string answer;
-	vector<string> result;
-	void search(string::iterator data, int pos = 0)
-	{
-		static const string map[] =
-		{
-			" ", "abc", "def",
-			"ghi", "jkl", "mno",
-			"pqrs", "tuv", "wxyz"
-		};
-		if (('0' < data[pos]) && (data[pos] <= '9'))
-		{
-			answer.resize(pos + 1);
-			int index = int(data[pos] - '1');
-			for (int n = 0; n < map[index].length(); ++n)
-			{
-				answer[pos] = map[index][n];
-				search(data, pos + 1);
-			}
-		}
-		else if ((data[pos] == '\0') && (answer.length() != 0))
-		{
-			result.push_back(answer);
-		}
-	}
 public:
 	vector<string> letterCombinations(string digits)
 	{
-		search(digits.begin());
-		return result;
+		static const string map[] =
+		{
+			"abc", "def", "ghi", "jkl",
+			"mno", "pqrs", "tuv", "wxyz"
+		};
+		vector<string> result(1, "");
+		string::iterator data = digits.begin();
+		for (; data != digits.end(); ++data)
+		{
+			if ((data[0] < '2') || (data[0] > '9'))
+			{
+				continue;
+			}
+			const string &exd = map[int(data[0] - '2')];
+			int nowsize = result.size();
+			result.resize(nowsize * exd.size());
+			for (int i = 1, pos = nowsize; i < exd.size(); ++i)
+			{
+				for (int j = 0; j < nowsize; ++j)
+				{
+					result[pos++] = result[j] + exd[i];
+				}
+			}
+			for (int j = 0; j < nowsize; ++j)
+			{
+				result[j] += exd[0];
+			}
+		}
+		return (result.size() == 1) ? vector<string>() : result;
 	}
 };
 

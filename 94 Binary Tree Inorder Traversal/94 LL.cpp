@@ -28,11 +28,12 @@ Note: Recursive solution is trivial, could you do it iteratively?
 
 class Solution
 {
+private:
+	vector<int> result;
+	vector<TreeNode*> trace;
 public:
 	vector<int> inorderTraversal(TreeNode* root)
 	{
-		vector<int> result;
-		vector<TreeNode*> trace;
 		if (root != NULL)
 		{
 			trace.push_back(root);
@@ -41,7 +42,7 @@ public:
 				trace.push_back(trace.back()->left);
 			}
 		}
-		while (trace.size() != 0)
+		while (!trace.empty())
 		{
 			TreeNode *cache = trace.back();
 			result.push_back(cache->val);
@@ -67,6 +68,6 @@ complexity: O(N)
 int main(void)
 {
 	Solution engine;
-	cout << engine.inorderTraversal(new TreeNode(0)).size() << '\n';
+	cout << engine.inorderTraversal(NULL).size() << '\n';
 	return 0;
 }

@@ -28,38 +28,37 @@ public:
 		if (nums.size() < 3) return result;
 		sort(nums.begin(), nums.end());
 		vector<int>::iterator first = nums.begin();
-		int firval = first[0] - 1;
+		int val_first = ~first[0];	// memorize
 		for (; first != nums.end(); ++first)
 		{
 			// remove duplicate
-			if (first[0] == firval) continue;
-			firval = first[0];
-			int want = 0 - firval;
+			if (val_first == first[0]) continue;
+			val_first = first[0];
 			vector<int>::iterator second = first + 1;
 			vector<int>::iterator third = nums.end() - 1;
 			// typical two slide pointer
 			while (second < third)
 			{
-				if ((second[0] + third[0]) < want)
+				if ((val_first + second[0] + third[0]) < 0)
 				{
 					++second;
 				}
-				else if ((second[0] + third[0]) > want)
-				{
-					--third;
-				}
-				else
+				else if ((val_first + second[0] + third[0]) == 0)
 				{
 					vector<int> triplet(3);
-					triplet[0] = first[0];
+					triplet[0] = val_first;
 					triplet[1] = second[0];
 					triplet[2] = third[0];
 					result.push_back(triplet);
-					// pointer slide required!
+					// remove duplicate
 					while ((second < third) && (second[0] == triplet[1]))
 					{
 						++second;
 					}
+				}
+				else
+				{
+					--third;
 				}
 			}
 		}
@@ -69,7 +68,7 @@ public:
 
 /*
 idea: loop first value, slide two additional values.
-complexity: Time O(N^2)
+complexity: Time O(N^2) Space O(1)
 */
 
 int main(void)

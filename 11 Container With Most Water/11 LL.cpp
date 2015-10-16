@@ -22,9 +22,8 @@ public:
 		int left = 0, right = height.size() - 1;
 		while (left < right)
 		{
-			int area = (right - left) * min(height[left], height[right]);
-			result = (result < area) ? area : result;
-			if (height[left] < height[right])
+			result = max(result, (right - left) * min(height[left], height[right]));
+			if (height[left] <= height[right])
 			{
 				// when left is the the bottleneck
 				// --right will definitely decrease capacity

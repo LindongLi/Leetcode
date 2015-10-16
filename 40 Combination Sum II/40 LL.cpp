@@ -26,39 +26,31 @@ A solution set is:
 class Solution
 {
 private:
+	vector<int> trace;
 	vector<int>::iterator data;
 	vector<vector<int> > result;
-	void search(int max, int target, vector<int> &trace)
+	void search(int pos, int max, int target)
 	{
 		if (target == 0)
 		{
-			// remember to reverse for non-descending
-			result.push_back(vector<int> (trace.rbegin(), trace.rend()));
+			result.push_back(trace);
+			return;
 		}
-		else if (max >= 0)
+		for (int i = pos; i <= max; ++i)
 		{
-			int next = max - 1;
-			while ((next >= 0) && (data[next] == data[max]))
-			{
-				// next unique element if data[max] not selected
-				--next;
-			}
-			search(next, target, trace);
-			if (target >= data[max])
-			{
-				trace.push_back(data[max]);
-				search(max - 1, target - data[max], trace);
-				trace.pop_back();
-			}
+			if ((i > pos) && (data[i - 1] == data[i])) continue;
+			if (data[i] > target) return;
+			trace.push_back(data[i]);
+			search(i + 1, max, target - data[i]);
+			trace.pop_back();
 		}
 	}
 public:
 	vector<vector<int> > combinationSum2(vector<int>& candidates, int target)
 	{
-		vector<int> trace;
 		data = candidates.begin();
 		sort(candidates.begin(), candidates.end());
-		search(candidates.size() - 1, target, trace);
+		search(0, candidates.size() - 1, target);
 		return result;
 	}
 };

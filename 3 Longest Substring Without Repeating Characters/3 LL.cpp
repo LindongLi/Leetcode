@@ -21,8 +21,8 @@ public:
 		int current = 0;
 		for (int i = 0; i < s.length(); ++i)
 		{
-			++current;	// substring length extend
-			current = min(current, i - prePos[int(s[i])]);
+			// substring length extend
+			current = min(current + 1, i - prePos[int(s[i])]);
 			prePos[int(s[i])] = i;
 			result = max(result, current);
 		}

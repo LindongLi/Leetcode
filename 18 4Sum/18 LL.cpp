@@ -1,6 +1,6 @@
 #include <vector>
 #include <iostream>
-#include <unordered_map>
+#include <algorithm>
 using namespace std;
 
 /*
@@ -29,46 +29,43 @@ public:
 		if (nums.size() < 4) return result;
 		sort(nums.begin(), nums.end());
 		vector<int>::iterator first = nums.begin();
-		int firval = first[0] - 1;
-		for (; first != nums.end(); ++first)
+		int val_first = ~first[0];	// memorize
+		for (; first != nums.end() - 1; ++first)
 		{
 			// remove duplicate
-			if (first[0] == firval) continue;
-			firval = first[0];
+			if (val_first == first[0]) continue;
+			val_first = first[0];
 			vector<int>::iterator second = first + 1;
-			int secval = second[0] - 1;
+			int val_second = ~second[0];
 			for (; second != nums.end(); ++second)
 			{
 				// remove duplicate
-				if (second[0] == secval) continue;
-				secval = second[0];
-				int want = target - firval - secval;
+				if (val_second == second[0]) continue;
+				val_second = second[0];
 				vector<int>::iterator third = second + 1;
 				vector<int>::iterator fourth = nums.end() - 1;
-				// typical two slide pointer
 				while (third < fourth)
 				{
-					if ((third[0] + fourth[0]) < want)
+					if ((val_first + val_second + third[0] + fourth[0]) < target)
 					{
 						++third;
 					}
-					else if ((third[0] + fourth[0]) > want)
-					{
-						--fourth;
-					}
-					else
+					else if ((val_first + val_second + third[0] + fourth[0]) == target)
 					{
 						vector<int> quadruplet(4);
-						quadruplet[0] = first[0];
-						quadruplet[1] = second[0];
+						quadruplet[0] = val_first;
+						quadruplet[1] = val_second;
 						quadruplet[2] = third[0];
 						quadruplet[3] = fourth[0];
 						result.push_back(quadruplet);
-						// pointer slide required!
 						while ((third < fourth) && (third[0] == quadruplet[2]))
 						{
 							++third;
 						}
+					}
+					else
+					{
+						--fourth;
 					}
 				}
 			}
@@ -79,7 +76,7 @@ public:
 
 /*
 idea: loop first & second value, slide two additional values.
-complexity: Time O(N^3)
+complexity: Time O(N^3) Space O(1)
 */
 
 int main(void)

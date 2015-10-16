@@ -33,7 +33,7 @@ class Solution
 private:
 	bool check(TreeNode *left, TreeNode *right)
 	{
-		if ((left == NULL) || (right	== NULL))
+		if ((left == NULL) || (right == NULL))
 		{
 			if ((left == NULL) && (right == NULL))
 			{

@@ -31,24 +31,22 @@ private:
 		case 'M':
 			return 1000;
 		default:
-			break;
+			return 0;
 		}
-		return 0;
 	}
 public:
 	int romanToInt(string s)
 	{
 		int result = 0;
+		int curval = 0;
 		string::iterator data = s.begin();
 		for (; data != s.end(); ++data)
 		{
-			int bit = getvalue(data[0]);
-			if (bit >= getvalue(data[1]))
-			{
-				result += bit;
-			}
-			else result -= bit;
+			int nextval = getvalue(data[0]);
+			result += (curval < nextval) ? -curval : curval;
+			curval = nextval;
 		}
+		result += curval;
 		return result;
 	}
 };

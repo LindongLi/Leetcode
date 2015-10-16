@@ -12,41 +12,49 @@ Input is guaranteed to be within the range from 1 to 3999.
 class Solution
 {
 private:
-	string result;
-	void fill(int &num, int mask, string s)
+	static string fill(int num, const char *alpha)
 	{
-		if (num >= (mask * 9))
+		string answer;
+		if (num == 9)
 		{
-			num -= mask * 9;
-			result += s[2];
-			result += s[0];
-			return;
+			answer += alpha[0];
+			answer += alpha[2];
 		}
-		if (num >= (mask * 5))
+		else if (num == 4)
 		{
-			num -= mask * 5;
-			result += s[1];
+			answer += alpha[1];
+			answer += alpha[2];
 		}
-		if (num >= (mask * 4))
+		else
 		{
-			num -= mask	* 4;
-			result += s[2];
-			result += s[1];
-			return;
+			if (num >= 5)
+			{
+				num -= 5;
+				answer += alpha[1];
+			}
+			if (num >= 1)
+			{
+				answer += alpha[2];
+				if (num >= 2)
+				{
+					answer += alpha[2];
+					if (num >= 3)
+					{
+						answer += alpha[2];
+					}
+				}
+			}
 		}
-		while (num >= mask)
-		{
-			num -= mask;
-			result += s[2];
-		}
+		return answer;
 	}
 public:
 	string intToRoman(int num)
 	{
-		fill(num, 1000, "**M");
-		fill(num, 100, "MDC");
-		fill(num, 10, "CLX");
-		fill(num, 1, "XVI");
+		string result;
+		result += fill((num / 1000) % 10, "  M");
+		result += fill((num / 100) % 10, "MDC");
+		result += fill((num / 10) % 10, "CLX");
+		result += fill(num % 10, "XVI");
 		return result;
 	}
 };
@@ -59,6 +67,6 @@ complexity: Time O(N)
 int main(void)
 {
 	Solution engine;
-	cout << engine.intToRoman(1) << '\n';
+	cout << engine.intToRoman(1207) << '\n';
 	return 0;
 }

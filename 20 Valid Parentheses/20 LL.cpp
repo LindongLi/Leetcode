@@ -16,7 +16,7 @@ class Solution
 public:
 	bool isValid(string s)
 	{
-		vector<char> stack;
+		vector<char> stack(1, '*');
 		string::iterator data = s.begin();
 		for (; data != s.end(); ++data)
 		{
@@ -28,20 +28,22 @@ public:
 				stack.push_back(data[0]);
 				break;
 			case ')':
-				if ((stack.size() == 0) || (stack.back() != '(')) return false;
+				if (stack.back() != '(') return false;
 				stack.pop_back();
 				break;
 			case '}':
-				if ((stack.size() == 0) || (stack.back() != '{')) return false;
+				if (stack.back() != '{') return false;
 				stack.pop_back();
 				break;
 			case ']':
-				if ((stack.size() == 0) || (stack.back() != '[')) return false;
+				if (stack.back() != '[') return false;
 				stack.pop_back();
 				break;
+			default:
+				return false;
 			}
 		}
-		return (stack.size() == 0);
+		return (stack.size() == 1);
 	}
 };
 

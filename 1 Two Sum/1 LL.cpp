@@ -22,19 +22,19 @@ class Solution
 public:
 	vector<int> twoSum(vector<int>& nums, int target)
 	{
-		vector<int> result;
-		unordered_map<int, int> val_index;	// map value to index
+		vector<int> result(2, -1);
+		unordered_map<int, int> val_index;
 		for (int i = 0; i < nums.size(); ++i)
 		{
-			if (val_index.find(target - nums[i]) != val_index.end())	// found
+			if (val_index.find(nums[i]) != val_index.end())
 			{
-				result.push_back(val_index[target - nums[i]]);
-				result.push_back(i + 1);
+				result[0] = val_index[nums[i]] + 1;
+				result[1] = i + 1;
 				break;
 			}
 			else
 			{
-				val_index[nums[i]] = i + 1;
+				val_index[target - nums[i]] = i;
 			}
 		}
 		return result;
@@ -42,8 +42,8 @@ public:
 };
 
 /*
-idea: unordered_map uses hash? Searching costs constant time?
-complexity: Time O(N)
+idea: unordered_map uses hash, constant time search
+complexity: Time O(N) Space O(N)
 */
 
 int main(void)

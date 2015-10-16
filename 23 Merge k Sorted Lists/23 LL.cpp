@@ -18,33 +18,74 @@ Merge k sorted linked lists and return it as one sorted list. Analyze and descri
 class Solution
 {
 private:
-	vector<ListNode*> heap;
-	static bool compare(ListNode *a, ListNode *b)
+	vector<ListNode*> data;
+	bool pull_up(int pos = 1)
 	{
-		return (a->val > b->val);
+		if (pos > data.size())
+		{
+			return false;
+		}
+		int child = pos << 1, i = pos;
+		if (pull_up(child) && (data[i - 1]->val > data[child - 1]->val))
+		{
+			i = child;
+		}
+		if (pull_up(child + 1) && (data[i - 1]->val > data[child]->val))
+		{
+			i = child + 1;
+		}
+		if (i != pos)
+		{
+			swap(data[pos - 1], data[i - 1]);
+			push_down(i);
+		}
+		return true;
+	}
+	void push_down(int pos = 1)
+	{
+		int child = pos << 1, i = pos;
+		if ((child <= data.size()) && (data[i - 1]->val > data[child - 1]->val))
+		{
+			i = child;
+		}
+		if ((child < data.size()) && (data[i - 1]->val > data[child]->val))
+		{
+			i = child + 1;
+		}
+		if (i != pos)
+		{
+			swap(data[pos - 1], data[i - 1]);
+			push_down(i);
+		}
 	}
 public:
 	ListNode* mergeKLists(vector<ListNode*>& lists)
 	{
 		ListNode result(0);
-		vector<ListNode*>::iterator data = lists.begin();
-		for (; data != lists.end(); ++data)
+		vector<ListNode*>::iterator it = lists.begin();
+		for (; it != lists.end(); ++it)
 		{
-			if (data[0] != NULL) heap.push_back(data[0]);
+			if (it[0] != NULL)
+			{
+				data.push_back(it[0]);
+			}
 		}
-		make_heap(heap.begin(), heap.end(), compare);
+		Solution::pull_up();
 		ListNode *slide = &result;
-		while (heap.size() != 0)
+		while (data.size() != 0)
 		{
-			pop_heap(heap.begin(), heap.end(), compare);
-			slide->next = heap.back();
+			slide->next = data[0];
 			slide = slide->next;
 			if (slide->next != NULL)
 			{
-				heap.back() = slide->next;
-				push_heap(heap.begin(), heap.end(), compare);
+				data[0] = slide->next;
 			}
-			else heap.pop_back();
+			else
+			{
+				data[0] = data.back();
+				data.pop_back();
+			}
+			Solution::push_down();
 		}
 		return result.next;
 	}
@@ -58,10 +99,9 @@ complexity: Time O(NlogN)
 int main(void)
 {
 	vector<ListNode*> lists;
+	lists.push_back(new ListNode(3));
 	lists.push_back(new ListNode(2));
-	lists.push_back(new ListNode(1));
-	lists.push_back(NULL);
 	Solution engine;
-	cout << engine.mergeKLists(lists) << '\n';
+	cout << engine.mergeKLists(lists)->val << '\n';
 	return 0;
 }

@@ -45,7 +45,7 @@ public:
 			if (nv1 > nv2) return 1;
 			if (nv1 < nv2) return -1;
 		}
-		while ((nv1 != 0) || (it1 != version1.end()) || (it2 != version2.end()));
+		while ((it1 != version1.end()) || (it2 != version2.end()));
 		return 0;
 	}
 };

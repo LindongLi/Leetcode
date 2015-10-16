@@ -15,17 +15,19 @@ class Solution
 public:
 	int reverse(int x)
 	{
-		if (x == 0x80000000) return 0;	// handle MIN_INT
+		if (x == ~0x7FFFFFFF)
+		{
+			return 0;
+		}
 		bool neg = (x < 0);
 		x = neg ? -x : x;
-		int digits[12];
+		int digits[16];
 		int pos = 0;
-		do
+		while (x != 0)
 		{
 			digits[pos++] = x % 10;
 			x /= 10;
 		}
-		while (x != 0);
 		long long int result = 0;
 		for (int i = 0; i < pos; ++i)
 		{

@@ -19,20 +19,24 @@ public:
 	int myAtoi(string str)
 	{
 		string::iterator data = str.begin();
-		bool neg = false;
-		long long int result = 0;
-		while (data[0] == ' ') ++data;
-		if ((data[0] == '+') || (data[0] == '-'))
+		while ((data != str.end()) && (data[0] == ' '))
+		{
+			++data;
+		}
+		bool neg;
+		if ((data != str.end()) && ((data[0] == '+') || (data[0] == '-')))
 		{
 			neg = (data[0] == '-');
 			++data;
 		}
-		while (('0' <= data[0]) && (data[0] <= '9'))
+		long long int result = 0;
+		while (data != str.end())
 		{
+			if ((data[0] < '0') || (data[0] > '9')) break;
 			result = result * 10 + int(data[0] - '0');
 			if (result > 0x7FFFFFFF)
 			{
-				return neg ? 0x80000000 : 0x7FFFFFFF;
+				return neg ? ~0x7FFFFFFF : 0x7FFFFFFF;
 			}
 			++data;
 		}
@@ -48,6 +52,6 @@ complexity: O(1)
 int main(void)
 {
 	Solution engine;
-	cout << engine.myAtoi("9223372036854775809") << '\n';
+	cout << engine.myAtoi("-12345678901") << '\n';
 	return 0;
 }
